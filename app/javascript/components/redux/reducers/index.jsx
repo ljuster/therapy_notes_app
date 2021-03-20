@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import quiz from "./quiz";
-import quizPaginator from "./quizPaginator";
+import notes from "./notes";
+import notesPaginator from "./notesPaginator";
 
-export default combineReducers({ quiz, quizPaginator });
+export default combineReducers({ notes, notesPaginator });

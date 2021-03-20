@@ -1,4 +1,4 @@
-import { SELECT_CHOICE, NEXT_NOTE, PREVIOUS_NOTE } from "./actionTypes";
+import { SELECT_NOTE, NEXT_NOTE, PREVIOUS_NOTE } from "./actionTypes";
 
 
 export const selectNote = content => ({

@@ -1,14 +1,14 @@
-import { NEXT_QUESTION, PREVIOUS_QUESTION } from "../actionTypes";
+import { NEXT_NOTE, PREVIOUS_NOTE } from "../actionTypes";
 
-const initialState = { questionNumber: 1};
+const initialState = { pageNumber: 1};
 
 const visibilityFilter = (state = initialState, action) => {
     switch (action.type) {
-        case NEXT_QUESTION: {
-            return action.payload.questionNumber++;
+        case NEXT_NOTE: {
+            return action.payload.pageNumber++;
         }
-        case PREVIOUS_QUESTION: {
-            return action.payload.questionNumber--;
+        case PREVIOUS_NOTE: {
+            return action.payload.pageNumber--;
         }
         default: {
             return state;

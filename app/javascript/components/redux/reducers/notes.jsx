@@ -1,27 +1,13 @@
-import { RANK_CHOICE, SELECT_CHOICE } from "../actionTypes";
+import { SELECT_NOTE } from "../actionTypes";
 
 const initialState = {
-    questions: [],
+    notes: [],
     byIds: {}
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case RANK_CHOICE: {
-            const { id, content } = action.payload;
-            return {
-                ...state,
-                questions: [...state.questions, id],
-                byIds: {
-                    ...state.byIds,
-                    [id]: {
-                        content,
-                        completed: false
-                    }
-                }
-            };
-        }
-        case SELECT_CHOICE: {
+        case SELECT_NOTE: {
             const { id } = action.payload;
             return {
                 ...state,

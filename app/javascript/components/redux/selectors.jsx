@@ -19,9 +19,9 @@ export const getNotes = store => {
 export const getNotesByType = (store, noteType) => {
     const notes = getNotes(store);
     switch (noteType) {
-        case QUESTION_TYPES.MULTISELECT_THREE:
+        case NOTE_TYPES.MULTISELECT_THREE:
             return notes.filter(note => !note.multi_three);
-        case QUESTION_TYPES.MULTISELECT_ALL:
+        case NOTE_TYPES.MULTISELECT_ALL:
         default:
             return notes;
     }
