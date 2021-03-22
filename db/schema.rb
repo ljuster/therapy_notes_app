@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2021_03_21_173221) do
   create_table "groups", force: :cascade do |t|
     t.integer "location_id"
     t.string "name"
+    t.integer "state", default: 0
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", null: false
@@ -41,7 +42,7 @@ ActiveRecord::Schema.define(version: 2021_03_21_173221) do
 
   create_table "users", force: :cascade do |t|
     t.string "slug"
-    t.string "state", default: "active"
+    t.integer "state", default: 0
     t.string "type"
     t.string "first_name"
     t.string "last_name"

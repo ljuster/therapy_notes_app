@@ -2,7 +2,8 @@ class CreateUsers < ActiveRecord::Migration[5.2]
   def change
     create_table :users do |t|
       t.string :slug
-      t.string :state, default: 'active'
+      # 0 => "active"
+      t.integer :state, default: 0
 
       # sti column for User: Patient, Therapist
       t.string :type

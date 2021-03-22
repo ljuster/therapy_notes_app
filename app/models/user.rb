@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # Includes
   include Slugging # Concern: handles assiging user slugs and associated finders
   include Nameable
+  enum state: { active: 0, inactive: 1 }
 
   PASSWORD_REGEX = /\A(?=.*[A-Z])(?=.*\d).{8,}/ # At least one uppercase letter and one digit, >= 8 characters in length
   # Regex prevents parentheses and other non-name characters. Allows
@@ -28,7 +29,7 @@ class User < ApplicationRecord
   #                 },
   #                 using: { tsearch: { prefix: true } }
 
-  def patient?
+  def group?
     false
   end
 

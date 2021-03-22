@@ -4,7 +4,7 @@ class Patient < User
   validates :first_name, presence: true
   validates :gender, presence: true, inclusion: %w(male female)
 
-  def patient?
+  def group?
     true
   end
 

@@ -4,19 +4,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import TextField from "@material-ui/core/TextField/TextField";
+import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-
-const interventions = {
-    reflection: "Therapist asked open-ended questions to facilitate self-reflection.",
-    positive: "Therapist provided positive regard, structure, and support.",
-    containment: "Therapist provided containment and modeled appropriate boundaries.",
-    expression: "Therapist encouraged creative expression and positive, supportive social interactions.",
-    selfExpression: "Therapist encouraged creative self-expression and spontaneity.",
-    psychoeducation: "Therapist provide psychoeducation on the DBT skill of",
-    identifyingStressors: "Therapist supported client in identifying current stressors.",
-    reframing: "Therapist supported client in reframing thoughts.",
-    identifyingStrengths:"Therapist supported client in identifying personal strengths."
-}
+import { INTERVENTIONS } from "../packs/constants";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -40,11 +30,11 @@ export default () => {
     const classes = useStyles();
     const [affect, setAffect] = React.useState("depressed");
     const [participation, setParticipation] = React.useState("active");
-    const [intervention, setIntervention] = React.useState(get(interventions, "reflection"));
+    const [intervention, setIntervention] = React.useState(INTERVENTIONS["reflection"]);
     const [firstName, setFirstName] = React.useState();
     const [participationOutput, setParticipationOutput] = React.useState("");
     const [affectOutput, setAffectOutput] = React.useState("");
-    const [interventionOutput, setInterventionOutput] = React.useState(get(interventions, "reflection"));
+    const [interventionOutput, setInterventionOutput] = React.useState(INTERVENTIONS["reflection"]);
     const [output, setOutput] = React.useState("");
 
     const handleFirstName = (event) => {
@@ -65,8 +55,8 @@ export default () => {
 
     const handleIntervention = (event) => {
         setIntervention(event.currentTarget.name);
-        setInterventionOutput(get(interventions, event.currentTarget.name))
-        setOutput(`${participationOutput} ${affectOutput} ${get(interventions, event.currentTarget.name)}`)
+        setInterventionOutput(INTERVENTIONS[event.currentTarget.name])
+        setOutput(`${participationOutput} ${affectOutput} ${INTERVENTIONS[event.currentTarget.name]}`)
     }
 
     const handleOutputChange = (event) => {
@@ -79,6 +69,7 @@ export default () => {
                 <Grid item xs={6}>
                     <h1 className="display-4">Psych Notes</h1>
                     <div className='col-sm-12 col-lg-6 offset-lg-3 ' key="name">
+                        <Button component={Link} to={"/groups/new"}>New Group</Button>
                         <TextField
                             key="first_name"
                             name="firstName"
@@ -89,7 +80,12 @@ export default () => {
                             variant="outlined"
                         />
                     </div>
+                    <Button variant="contained" color="primary"><Link to="/groups/new">New Group</Link>NEw Group</Button>
+                    <Button><Link to="/groups/new">New Group</Link>NEw Group</Button>
+                    <Button><Link to="/groups/new">New Group</Link>NEw Group</Button>
+
                     <Divider className={classes.divider} />
+                    <Button component={Link} variant="contained" color="primary" to={"/groups/new"}>New Group</Button>
 
                     <Button onClick={handleParticipation} name="participated actively" variant="contained" color="primary">Active</Button>
                     <Button onClick={handleParticipation} name="participated as a witness" variant="contained" color="primary">Witness</Button>
