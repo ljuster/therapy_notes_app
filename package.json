@@ -2,6 +2,7 @@
   "name": "therapy_notes_app",
   "license": "NO-LICENSE",
   "private": true,
+  "proxy": "http://localhost:3001",
   "dependencies": {
     "@babel/preset-react": "^7.9.4",
     "@date-io/date-fns": "latest",
@@ -32,5 +33,9 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3.10.3"
+  },
+  "engines": {
+    "node": "12.16.2",
+    "yarn": "1.22.4"
   }
 }
