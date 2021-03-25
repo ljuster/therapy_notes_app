@@ -4,9 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import TextField from "@material-ui/core/TextField/TextField";
+import Box from "@material-ui/core/Box";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import { INTERVENTIONS } from "../packs/constants";
+import { INTERVENTIONS, SUBJECTIVE, BEHAVIOR_IN_GROUP, AFFECTS } from "../packs/constants";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -24,39 +25,48 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         margin: theme.spacing(2, 0),
     },
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
 }));
 
 export default () => {
     const classes = useStyles();
     const [affect, setAffect] = React.useState("depressed");
     const [participation, setParticipation] = React.useState("active");
-    const [intervention, setIntervention] = React.useState(INTERVENTIONS["reflection"]);
+    const [intervention, setIntervention] = React.useState("");
+    const [subjective, setSubjective] = React.useState("");
     const [firstName, setFirstName] = React.useState();
     const [participationOutput, setParticipationOutput] = React.useState("");
     const [affectOutput, setAffectOutput] = React.useState("");
     const [interventionOutput, setInterventionOutput] = React.useState(INTERVENTIONS["reflection"]);
+    const [subjectiveOutput, setSubjectiveOutput] = React.useState(SUBJECTIVE["reflection"]);
     const [output, setOutput] = React.useState("");
-
-    const handleFirstName = (event) => {
-        setFirstName(event.target.value)
-    };
 
     const handleAffect = (event) => {
         setAffect(event.currentTarget.name);
-        setAffectOutput(`${firstName} presented with a ${affect} mood.`)
-        setOutput(participationOutput + `${firstName} presented with a ${affect} mood.`)
+        setAffectOutput(AFFECTS[event.currentTarget.name])
+        setOutput(AFFECTS[event.currentTarget.name])
     };
 
     const handleParticipation = (event) => {
         setParticipation(event.currentTarget.name);
-        setParticipationOutput(`Client ${event.currentTarget.name} in session. `)
-        setOutput(`Client ${event.currentTarget.name} in session. `)
+        setParticipationOutput(BEHAVIOR_IN_GROUP[event.currentTarget.name])
+        setOutput(`${affectOutput} ${BEHAVIOR_IN_GROUP[event.currentTarget.name]}`)
+    }
+
+    const handleSubjective = (event) => {
+        setSubjective(event.currentTarget.name);
+        setSubjectiveOutput(SUBJECTIVE[event.currentTarget.name])
+        setOutput(`${participationOutput} ${affectOutput} ${SUBJECTIVE[event.currentTarget.name]}`)
     }
 
     const handleIntervention = (event) => {
         setIntervention(event.currentTarget.name);
         setInterventionOutput(INTERVENTIONS[event.currentTarget.name])
-        setOutput(`${participationOutput} ${affectOutput} ${INTERVENTIONS[event.currentTarget.name]}`)
+        setOutput(`${affectOutput} ${participationOutput} ${subjectiveOutput} ${INTERVENTIONS[event.currentTarget.name]}`)
     }
 
     const handleOutputChange = (event) => {
@@ -66,61 +76,44 @@ export default () => {
     return (
         <div key="container" className="container mt-5">
             <Grid container spacing={3}>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <h1 className="display-4">Psych Notes</h1>
                     <div className='col-sm-12 col-lg-6 offset-lg-3 ' key="name">
-                        <Button component={Link} to={"/groups/new"}>New Group</Button>
-                        <TextField
-                            key="first_name"
-                            name="firstName"
-                            onChange={handleFirstName}
-                            value={firstName}
-                            label="First Name"
-                            placeholder={"Name"}
-                            variant="outlined"
-                        />
+                        <Button component={Link} to={"/groups/new"} color="default">New Group</Button>
                     </div>
-                    <Button variant="contained" color="primary"><Link to="/groups/new">New Group</Link>NEw Group</Button>
-                    <Button><Link to="/groups/new">New Group</Link>NEw Group</Button>
-                    <Button><Link to="/groups/new">New Group</Link>NEw Group</Button>
-
-                    <Divider className={classes.divider} />
-                    <Button component={Link} variant="contained" color="primary" to={"/groups/new"}>New Group</Button>
-
-                    <Button onClick={handleParticipation} name="participated actively" variant="contained" color="primary">Active</Button>
-                    <Button onClick={handleParticipation} name="participated as a witness" variant="contained" color="primary">Witness</Button>
-                    <Button onClick={handleParticipation} name="was lethargic" variant="contained" color="primary" >Lethargic</Button>
-                    <Divider className={classes.divider} />
-
-                    <Button onClick={handleAffect} name="dysphoric" variant="contained">Dysphoric</Button>
-                    <Button onClick={handleAffect} name="depressed" variant="contained">Depressed</Button>
-                    <Button onClick={handleAffect} variant="contained" color="primary" name="distant">Distant</Button>
-                    <Button onClick={handleAffect} variant="contained" name="anxious">Anxious</Button>
-                    <Divider className={classes.divider} />
-
-                    <Button onClick={handleIntervention} name="reflection" color="primary" variant="contained">Reflection</Button>
-                    <Button onClick={handleIntervention} name="positive" color="secondary" variant="contained">Positive</Button>
-                    <Button onClick={handleIntervention} name="containment" color="primary" variant="contained">Containment</Button>
-                    <Button onClick={handleIntervention} name="expression"  color="secondary" variant="contained">Creative Expression</Button>
-                    <Button onClick={handleIntervention} name="selfExpression"  color="primary" variant="contained">Self-Expression</Button>
-                    <Button onClick={handleIntervention} name="psychoeducation"  color="secondary" variant="contained">Psychoeducation</Button>
-                    <Button onClick={handleIntervention} name="identifyingStressors"  color="primary" variant="contained">Identifying Stressors</Button>
-                    <Button onClick={handleIntervention} name="identifyingStrengths"  color="secondary" variant="contained">Identifying Strengths</Button>
-                    <Button onClick={handleIntervention} name="reframing"  color="primary" variant="contained">reframing</Button>
-                   
-                    <Divider className={classes.divider} />
-                    <div className='col-sm-12 col-lg-6 offset-lg-3 ' key="name">
-                        <TextField
-                            id="outlined-multiline-static"
-                            label="Multiline"
-                            multiline
-                            rows={10}
-                            variant="outlined"
-                            value={output}
-                            onChange={handleOutputChange}
-                            placeholder={"Output"}
-                        />
+                    <div className={classes.root}>
+                        { Object.keys(AFFECTS).map((k) => (
+                            <Button onClick={handleAffect} p={1} name={k} color="primary" variant="contained">{k}</Button>
+                        ))}
                     </div>
+                    <Divider className={classes.divider} />
+                    <div className={classes.root}>
+                        { Object.keys(BEHAVIOR_IN_GROUP).map((k) => (
+                            <Button onClick={handleParticipation} p={1} name={k} color="primary" variant="contained">{k}</Button>
+                        ))}
+                    </div>
+                    <Divider className={classes.divider} />
+                    <div className={classes.root}>
+                    { Object.keys(SUBJECTIVE).map((k) => (
+                        <Button onClick={handleSubjective} name={k} color="primary" variant="contained">{k}</Button>
+                    ))}
+                    </div>
+                    <Divider className={classes.divider} />
+                    <div className={classes.root}>
+                        { Object.keys(INTERVENTIONS).map((k) => (
+                            <Button onClick={handleIntervention} name={k} color="primary" variant="contained">{k}</Button>
+                        ))}
+                    </div>
+                    <TextField fullWidth
+                        id="outlined-multiline-static"
+                        label="Multiline"
+                        multiline
+                        rows={10}
+                        variant="outlined"
+                        value={output}
+                        onChange={handleOutputChange}
+                        placeholder={"Output"}
+                    />
                 </Grid>
             </Grid>
 
