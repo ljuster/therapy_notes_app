@@ -45,17 +45,17 @@ export default () => {
     const [subjectiveOutput, setSubjectiveOutput] = React.useState(SUBJECTIVE["reflection"]);
     const [output, setOutput] = React.useState("");
 
-    const handleAffect = (event) => {
-        setAffect(event.currentTarget.name);
-        setAffectOutput(AFFECTS[event.currentTarget.name])
-        setOutput(AFFECTS[event.currentTarget.name])
-    };
-
     const handleParticipation = (event) => {
         setParticipation(event.currentTarget.name);
-        setParticipationOutput(BEHAVIOR_IN_GROUP[event.currentTarget.name])
-        setOutput(`${affectOutput} ${BEHAVIOR_IN_GROUP[event.currentTarget.name]}`)
+        setParticipationOutput(`${BEHAVIOR_IN_GROUP[event.currentTarget.name]}`)
+        setOutput(`${BEHAVIOR_IN_GROUP[event.currentTarget.name]}`)
     }
+
+    const handleAffect = (event) => {
+        setAffect(event.currentTarget.name);
+        setAffectOutput(`Mood - ${AFFECTS[event.currentTarget.name]}`)
+        setOutput(`${participationOutput} ${AFFECTS[event.currentTarget.name]}`)
+    };
 
     const handleSubjective = (event) => {
         setSubjective(event.currentTarget.name);
@@ -66,7 +66,7 @@ export default () => {
     const handleIntervention = (event) => {
         setIntervention(event.currentTarget.name);
         setInterventionOutput(INTERVENTIONS[event.currentTarget.name])
-        setOutput(`${affectOutput} ${participationOutput} ${subjectiveOutput} ${INTERVENTIONS[event.currentTarget.name]}`)
+        setOutput(`${participationOutput} ${affectOutput} ${subjectiveOutput} ${INTERVENTIONS[event.currentTarget.name]}`)
     }
 
     const handleOutputChange = (event) => {
@@ -81,15 +81,16 @@ export default () => {
                     <div className='col-sm-12 col-lg-6 offset-lg-3 ' key="name">
                         <Button component={Link} to={"/groups/new"} color="default">New Group</Button>
                     </div>
-                    <div className={classes.root}>
-                        { Object.keys(AFFECTS).map((k) => (
-                            <Button onClick={handleAffect} p={1} name={k} color="primary" variant="contained">{k}</Button>
-                        ))}
-                    </div>
                     <Divider className={classes.divider} />
                     <div className={classes.root}>
                         { Object.keys(BEHAVIOR_IN_GROUP).map((k) => (
                             <Button onClick={handleParticipation} p={1} name={k} color="primary" variant="contained">{k}</Button>
+                        ))}
+                    </div>
+                    <Divider className={classes.divider} />
+                    <div className={classes.root}>
+                        { Object.keys(AFFECTS).map((k) => (
+                            <Button onClick={handleAffect} p={1} name={k} color="primary" variant="contained">{k}</Button>
                         ))}
                     </div>
                     <Divider className={classes.divider} />
